@@ -1,0 +1,54 @@
+{% load bootstrap4 %}
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% block title %}Coffee shop{% endblock %}</title>
+
+  {% bootstrap_css %}
+  {% bootstrap_javascript jquery='slim' %}
+
+  <meta 
+    name="viewport" 
+    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  >
+  <script 
+    src="https://kit.fontawesome.com/499381f5fe.js" 
+    crossorigin="anonymous"
+  ></script>
+</head>
+
+{% bootstrap_messages %}
+
+  <body>
+    <header id="header">
+      <a class="navbar-brand text-white link--hover" href="#">
+        <i class="far fa-images"></i>
+        Coffee shop
+      </a>
+    </header>
+
+  <main class="container" id="content">
+    <section>
+      {% with cart|length as total_items %}
+        {% if cart|length > 0 %}
+          Your cart:
+          <a href="{% url 'cart:cart_detail' %}">
+            {{total_items}} item{{total_items|pluralize}},
+            ${{cart.get_total_price}}
+          </a>
+        {% else %}
+          <p>Your cart is empty</p>
+        {% endif %}
+      {% endwith %}
+    </section>
+
+    <section>
+      {% block content %}
+      {% endblock %}
+    </section>
+  </main>
+
+  </body>
+</html>
