@@ -1,0 +1,38 @@
+{% extends 'shop/base.html' %}
+{% load bootstrap4 %}
+
+{% block title %}
+  Checkout
+{% endblock title %}
+
+{% block content %}
+  <h1>Chekcout</h1>
+
+  <div>
+    <h3>Your order</h3>
+
+    <ul>
+      {% for item in cart %}
+        <li>
+          {{item.quantity}} x {{item.product.name}}
+          <span>${{item.total_price|floatformat:"2"}}</span>
+        </li>
+      {% endfor %}
+      
+      {% if cart.coupon %}
+        <li>
+          "{{cart.coupon.code}}" ({{cart.coupon.discount}}% off)
+          <span>${{cart.get_discount|floatformat:"2"}}</span>
+        </li>
+      {% endif %}
+    </ul>
+
+    <p>Total: ${{cart.get_total_price_after_discount|floatformat:"2"}}</p>
+  <div>
+
+  <form action="." method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <button type="submit">Place order</button>
+  </form>
+{% endblock content %}

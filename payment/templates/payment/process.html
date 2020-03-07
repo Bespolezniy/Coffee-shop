@@ -1,0 +1,85 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}
+  Pay by credit card
+{% endblock title %}
+
+{% block content %}
+  <h1>Pay by credit card</h1>
+
+  <form action="." id="payment" method="post">
+    {% csrf_token %}
+
+    <label for="card-number">Card Number</label>
+    <div id="card-number"></div>
+
+    <label for="cvv">CVV</label>
+    <div id="cvv"></div>
+
+    <label for="expiration-date">Expiration Date</label>
+    <div id="expiration-date"></div>
+
+    <input type="hidden" id="nonce" name="payment_method_nonce" value="">
+
+    <button id="btnSubmit" type="btnSubmit">Pay</button>
+  </form>
+
+  <script 
+    src="https:/js.braintreegateway.com/web/3.29.0/js/hosted-fields.min.js"
+  >
+  </script>
+  <script 
+    src="https:/js.braintreegateway.com/web/3.29.0/js/client.min.js"
+  >
+  </script>
+  <script>
+    const form = document.querySelector("#payment")
+    const submit = document.querySelector("#submit")
+    braintree.client.create({
+      authorization: "{{client_token}}"
+    }, (clientErr, clientInstance) => {
+
+      if (clientErr) {
+        console.error(err)
+        return
+      }
+
+      braintree.hostedFields.create({
+        client: clientInstance,
+        styles: {
+          "input": {"font-size": "13px"},
+          "input.invalid": {"color": "red"},
+          "input.valid": {"color": "green"},
+        },
+        fields: {
+          number: {selector: "#card-number"},
+          cvv: {selector: "#cvv"},
+          expirationDate: {selector: "#expiration-date"}
+        }
+      }, (hostedFieldsErr, hostedFieldsInstance) => {
+        
+        if (hostedFieldsErr) {
+          console.error(hostedFieldsErr)
+          return
+        }
+
+        submit.removeAttribute("disabled")
+
+        form.addEventListener("submit", event => {
+          event.preventDefault()
+
+          hostedFieldsInstance.tokenize((tokemizeErr, payload) => {
+
+            if (tokemizeErr) {
+              console.error(tokemizeErr)
+              return
+            }
+
+            document.getElementById("nonce").value = payload.nonce
+            document.getElementById("payment").submit()
+          })
+        }, false)
+      })
+    })
+  </script>
+{% endblock content %}
