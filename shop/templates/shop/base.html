@@ -1,10 +1,11 @@
 {% load bootstrap4 %}
 {% load static %}
+{% load i18n %}
 
 <!DOCTYPE html>
 <html>
 <head>
-  <title>{% block title %}Coffee shop{% endblock %}</title>
+  <title>{% block title %}{% trans "Coffee shop" %}{% endblock %}</title>
 
   {% bootstrap_css %}
   {% bootstrap_javascript jquery='slim' %}
@@ -25,18 +26,36 @@
     <header id="header">
       <a class="navbar-brand text-white link--hover" href="#">
         <i class="far fa-images"></i>
-        Coffee shop
+        {% trans "Coffee shop" %}
       </a>
+
+      {% get_current_language as LANGUAGE_CODE %}
+      {% get_available_languages as LANGUAGES %}
+      {% get_language_info_list for LANGUAGES as languages %}
+      <div>
+        <p>{% trans "Language" %}:</p>
+        <ul>
+          {% for language in languages %}
+            <li>
+              <a href="/{{language.code}}/">
+                {{language.name_local}}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
     </header>
 
   <main class="container" id="content">
     <section>
       {% with cart|length as total_items %}
         {% if cart|length > 0 %}
-          Your cart:
+          {% trans "Your cart:" %}
           <a href="{% url 'cart:cart_detail' %}">
-            {{total_items}} item{{total_items|pluralize}},
-            ${{cart.get_total_price}}
+            {% blocktrans with total_items_plural=total_items|pluralize total_price=cart.get_total_price %}
+              {{total_items}} item{{total_items_plural}},
+              ${{total_price}}
+            {% endblocktrans %}
           </a>
         {% else %}
           <p>Your cart is empty</p>

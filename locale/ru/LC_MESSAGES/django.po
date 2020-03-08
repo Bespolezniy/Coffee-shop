@@ -8,17 +8,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-07 22:48+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2020-03-08 19:09+0300\n"
+"PO-Revision-Date: 2020-03-08 19:24+0000\n"
+"Last-Translator: b'  <admin@address.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
-"%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"X-Translated-Using: django-rosetta 0.9.3\n"
+
+#: .\cart\forms.py:9
+msgid "Quantity"
+msgstr "Количество"
 
 #: .\coffee_shop\settings.py:118
 msgid "English"
@@ -27,3 +30,31 @@ msgstr "Английский"
 #: .\coffee_shop\settings.py:119
 msgid "Russian"
 msgstr "Русский"
+
+#: .\coupons\forms.py:6
+msgid "Coupon"
+msgstr "Купон"
+
+#: .\shop\templates\shop\base.html:8 .\shop\templates\shop\base.html:29
+msgid "Coffee shop"
+msgstr "Кофе шоп"
+
+#: .\shop\templates\shop\base.html:37
+msgid "Your cart:"
+msgstr "Ваша корзина"
+
+#: .\shop\templates\shop\base.html:39
+#, python-format
+msgid ""
+"\n"
+"              %(total_items)s item%(total_items_plural)s,\n"
+"              $%(total_price)s\n"
+"            "
+msgstr ""
+"\n"
+"%(total_items)s предмет%(total_items_plural)ов,\n"
+"$%(total_price)s"
+
+#: .\shop\templates\shop\product\detail.html:33
+msgid "Add to cart"
+msgstr "Добавить в корзину"

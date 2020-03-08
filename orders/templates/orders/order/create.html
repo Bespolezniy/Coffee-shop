@@ -1,15 +1,16 @@
 {% extends 'shop/base.html' %}
 {% load bootstrap4 %}
+{% load i18n %}
 
 {% block title %}
-  Checkout
+  {% trans "Checkout" %}
 {% endblock title %}
 
 {% block content %}
-  <h1>Chekcout</h1>
+  <h1>{% trans "Checkout" %}</h1>
 
   <div>
-    <h3>Your order</h3>
+    <h3>{% trans "Your order" %}</h3>
 
     <ul>
       {% for item in cart %}
@@ -21,18 +22,20 @@
       
       {% if cart.coupon %}
         <li>
-          "{{cart.coupon.code}}" ({{cart.coupon.discount}}% off)
+          {% blocktrans with code=cart.coupon.code discount=cart.coupon.discount %}
+            "{{code}}" ({{discount}}% off)
+          {% endblocktrans %}
           <span>${{cart.get_discount|floatformat:"2"}}</span>
         </li>
       {% endif %}
     </ul>
 
-    <p>Total: ${{cart.get_total_price_after_discount|floatformat:"2"}}</p>
+    <p>{% trans "Total:" %} ${{cart.get_total_price_after_discount|floatformat:"2"}}</p>
   <div>
 
   <form action="." method="post">
     {% csrf_token %}
     {% bootstrap_form form %}
-    <button type="submit">Place order</button>
+    <button type="submit">{% trans "Place order:" %}</button>
   </form>
 {% endblock content %}
